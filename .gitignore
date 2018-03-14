@@ -1,0 +1,5 @@
+certs/
+.terraform/
+terraform.tfstate*
+terraform.tfvars
+admin.conf
