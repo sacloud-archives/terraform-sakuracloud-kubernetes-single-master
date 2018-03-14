@@ -6,7 +6,7 @@ This module deploys single-master Kubernetes cluster to SAKURA Cloud using `kube
 
 ## Overview
 
-![overview.png](https://github.com/sacloud/terraform-sakuracloud-kubernetes-single-master/blob/master/images/overview.png)
+![overview.png](https://raw.githubusercontent.com/sacloud/terraform-sakuracloud-kubernetes-single-master/master/images/overview.png)
 
 ## Getting Started
 
