@@ -6,7 +6,7 @@ This module deploys single-master Kubernetes cluster to SAKURA Cloud using `kube
 
 ## Overview
 
-![overview.png](images/overview.png)
+![overview.png](https://github.com/sacloud/terraform-sakuracloud-kubernetes-single-master/blob/master/images/overview.png)
 
 ## Getting Started
 
@@ -19,9 +19,7 @@ This module deploys single-master Kubernetes cluster to SAKURA Cloud using `kube
 ### Customize the deployment
 
 Customizations to the base installation are made to the Terraform variables for each deployment.  
-Examples of variables are provided in the file `examples/kubernetes.tf`.
-
-[View all of variables][variables.md].
+Examples of variables are provided in the file [`examples/kubernetes.tf`](https://github.com/sacloud/terraform-sakuracloud-kubernetes-single-master/blob/master/examples/kubernetes.tf).
 
 ### Initialize and configure Terraform
 
@@ -74,7 +72,7 @@ $ kubectl cluster-info
 
  `terraform-sakuracloud-kubernetes-single-master` Copyright (C) 2018 Kazumichi Yamamoto.
 
-  This project is published under [Apache 2.0 License](LICENSE.txt).
+  This project is published under [Apache 2.0 License](https://github.com/sacloud/terraform-sakuracloud-kubernetes-single-master/blob/master/LICENSE.txt).
   
 ## Author
 

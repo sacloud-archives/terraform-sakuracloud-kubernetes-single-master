@@ -8,7 +8,7 @@ module "kubernetes" {
   password = "<put-your-password-here>"
 
   // Number of worker node(allow zero)
-  worker_count = 0
+  worker_count = 3
 
   /*********************************************
    * for master node spec
