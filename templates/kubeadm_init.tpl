@@ -1,5 +1,13 @@
 # Initialize cluster by kubeadm
-kubeadm init --token=${token} --service-cidr=10.96.0.0/12
+cat > /tmp/kubeadm-extra-params.yaml <<EOF
+token: ${token}
+networking:
+  serviceSubnet: ${service_cidr}
+apiServerExtraArgs:
+  service-node-port-range: ${service_node_port_range}
+EOF
+
+kubeadm init --config /tmp/kubeadm-extra-params.yaml
 
 mkdir -p /root/.kube
 sudo cp -i /etc/kubernetes/admin.conf /root/.kube/config

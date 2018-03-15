@@ -1,16 +1,16 @@
 output "global_ip_address_all" {
   description = "Global IP addresses of all node"
-  value = "${concat(sakuracloud_server.masters.*.ipaddress, sakuracloud_server.workers.*.ipaddress)}"
+  value       = "${concat(sakuracloud_server.masters.*.ipaddress, sakuracloud_server.workers.*.ipaddress)}"
 }
 
 output "global_ip_address_masters" {
   description = "Global IP address of master node"
-  value = "${sakuracloud_server.masters.*.ipaddress}"
+  value       = "${sakuracloud_server.masters.*.ipaddress}"
 }
 
 output "global_ip_address_workers" {
   description = "Global IP addresses of worker nodes"
-  value = "${sakuracloud_server.workers.*.ipaddress}"
+  value       = "${sakuracloud_server.workers.*.ipaddress}"
 }
 
 output "vpc_switch_id" {
