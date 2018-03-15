@@ -3,3 +3,4 @@ certs/
 terraform.tfstate*
 terraform.tfvars
 admin.conf
+work/

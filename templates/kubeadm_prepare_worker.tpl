@@ -24,7 +24,7 @@ iptables -t filter -A INPUT -i lo -j ACCEPT
 iptables -t filter -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
 iptables -t filter -A INPUT -m tcp -p tcp --dport 10250 -j ACCEPT
 iptables -t filter -A INPUT -m tcp -p tcp --dport 10255 -j ACCEPT
-iptables -t filter -A INPUT -m tcp -p tcp --dport 30000:32767 -j ACCEPT
+iptables -t filter -A INPUT -m tcp -p tcp --dport ${service_node_port_range} -j ACCEPT
 iptables -t filter -A INPUT -j REJECT --reject-with icmp-host-prohibited
 iptables -t filter -A FORWARD -o cbr0 -j ACCEPT
 iptables -t filter -A FORWARD -o cbr0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT

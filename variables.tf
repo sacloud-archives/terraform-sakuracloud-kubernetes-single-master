@@ -3,17 +3,17 @@ variable password {
 }
 
 variable master_disk_size {
-  default = 20
+  default     = 20
   description = "Size of master node disk(Unit:GB)"
 }
 
 variable master_server_core {
-  default = 2
+  default     = 2
   description = "Number of master node CPU core"
 }
 
 variable master_server_memory {
-  default = 4
+  default     = 4
   description = "Size of master node memory(Unit:GB)"
 }
 
@@ -27,17 +27,17 @@ variable master_server_tags {
 }
 
 variable worker_disk_size {
-  default = 20
+  default     = 20
   description = "Size of worker node disk(Unit:GB)"
 }
 
 variable worker_server_core {
-  default = 2
+  default     = 2
   description = "Number of worker node CPU core"
 }
 
 variable worker_server_memory {
-  default = 4
+  default     = 4
   description = "Size of worker node memory(Unit:GB)"
 }
 
@@ -59,18 +59,23 @@ variable ssh_key_name {
 }
 
 variable kubeadm_token {
-  default = ""
+  default     = ""
   description = "Token used by kubeadm init/join(generated if empty)"
 }
 
 variable worker_count {
-  default = 3
+  default     = 3
   description = "Number of worker node(allow zero)"
 }
 
 variable enable_master_isolation {
-  default = true
+  default     = true
   description = "Flag not to schedule pod at master"
+}
+
+variable service_node_port_range {
+  default     = "30000-32767"
+  description = "A port range to reserve for services with NodePort visibility"
 }
 
 locals {

@@ -20,7 +20,7 @@ data template_file "worker_provisioning" {
   vars {
     startup_script_headers = "${data.template_file.worker_script_header.*.rendered[count.index]}"
     node_prepare           = "${data.template_file.worker_pod_network_script.*.rendered[count.index]}"
-    kubeadm_prepare        = "${file("${path.module}/templates/kubeadm_prepare_worker.tpl")}"
+    kubeadm_prepare        = "${data.template_file.kubeadm_prepare_worker.rendered}"
     kubeadm_action         = "${data.template_file.kubeadm_join.*.rendered[count.index]}"
   }
 
@@ -55,7 +55,7 @@ data template_file "worker_script_header" {
 }
 
 #################################
-# Bridge(for internal network)
+# pod network
 #################################
 data template_file "master_pod_network_script" {
   template = "${file("${path.module}/templates/pod_network.tpl")}"
@@ -85,6 +85,14 @@ data template_file "worker_pod_network_script" {
   count = "${local.worker_count}"
 }
 
+data template_file "kubeadm_prepare_worker" {
+  template = "${file("${path.module}/templates/kubeadm_prepare_worker.tpl")}"
+
+  vars {
+    service_node_port_range = "${replace(var.service_node_port_range, "-",":")}"
+  }
+}
+
 ##################################
 # kubeadm init
 ##################################
@@ -95,6 +103,8 @@ data template_file "kubeadm_init" {
     token                   = "${local.token}"
     pod_cidr                = "${cidrsubnet(local.pod_cidr, 8, local.master_ip_start_index + count.index)}"
     enable_master_isolation = "${local.enable_master_isolation}"
+    service_cidr            = "${local.service_cidr}"
+    service_node_port_range = "${replace(var.service_node_port_range, ":","-")}"
   }
 
   count = "${local.master_count}"
