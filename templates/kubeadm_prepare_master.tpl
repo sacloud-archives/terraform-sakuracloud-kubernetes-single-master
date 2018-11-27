@@ -63,10 +63,5 @@ yum install -y kubelet kubeadm kubectl
 systemctl enable kubelet && systemctl start kubelet
 
 # Install helm
-curl -LO https://kubernetes-helm.storage.googleapis.com/helm-v2.8.1-linux-amd64.tar.gz
-tar zxvf helm-v2.8.1-linux-amd64.tar.gz
-mv linux-amd64/helm /usr/local/bin/
-rm -rf linux-amd64/
-rm -f helm-v2.8.1-linux-amd64.tar.gz
-
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get | bash
 

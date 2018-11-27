@@ -37,11 +37,6 @@ data sakuracloud_archive "centos" {
 resource sakuracloud_disk "master_disks" {
   name              = "${local.master_node_name_prefix}${format("%02d", count.index+1)}"
   source_archive_id = "${data.sakuracloud_archive.centos.id}"
-  ssh_key_ids       = ["${sakuracloud_ssh_key.ssh_key.id}"]
-  note_ids          = ["${sakuracloud_note.master_provisioning.*.id[count.index]}"]
-  hostname          = "${local.master_node_name_prefix}${format("%02d", count.index+1)}"
-  password          = "${var.password}"
-  disable_pw_auth   = true
   size              = "${var.master_disk_size}"
 
   description = "${var.master_server_description}"
@@ -67,6 +62,12 @@ resource sakuracloud_server "masters" {
   description = "${var.master_server_description}"
   tags        = ["${var.master_server_tags}"]
 
+  ssh_key_ids     = ["${sakuracloud_ssh_key.ssh_key.id}"]
+  note_ids        = ["${sakuracloud_note.master_provisioning.*.id[count.index]}"]
+  hostname        = "${local.master_node_name_prefix}${format("%02d", count.index+1)}"
+  password        = "${var.password}"
+  disable_pw_auth = true
+
   count = "${local.master_count}"
 }
 
@@ -74,11 +75,6 @@ resource sakuracloud_server "masters" {
 resource sakuracloud_disk "worker_disks" {
   name              = "${local.worker_node_name_prefix}${format("%02d", count.index+1)}"
   source_archive_id = "${data.sakuracloud_archive.centos.id}"
-  ssh_key_ids       = ["${sakuracloud_ssh_key.ssh_key.id}"]
-  note_ids          = ["${sakuracloud_note.worker_provisioning.*.id[count.index]}"]
-  hostname          = "${local.worker_node_name_prefix}${format("%02d", count.index+1)}"
-  password          = "${var.password}"
-  disable_pw_auth   = true
   size              = "${var.worker_disk_size}"
 
   description = "${var.worker_server_description}"
@@ -103,6 +99,12 @@ resource sakuracloud_server "workers" {
 
   description = "${var.worker_server_description}"
   tags        = ["${var.worker_server_tags}"]
+
+  ssh_key_ids     = ["${sakuracloud_ssh_key.ssh_key.id}"]
+  note_ids        = ["${sakuracloud_note.worker_provisioning.*.id[count.index]}"]
+  hostname        = "${local.worker_node_name_prefix}${format("%02d", count.index+1)}"
+  password        = "${var.password}"
+  disable_pw_auth = true
 
   count = "${local.worker_count}"
 }
