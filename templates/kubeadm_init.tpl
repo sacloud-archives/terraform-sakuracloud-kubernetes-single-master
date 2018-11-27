@@ -1,6 +1,15 @@
 # Initialize cluster by kubeadm
 cat > /tmp/kubeadm-extra-params.yaml <<EOF
-token: ${token}
+apiVersion: kubeadm.k8s.io/v1alpha3
+kind: InitConfiguration
+bootstrapTokens:
+- groups:
+  token: ${token}
+
+---
+
+apiVersion: kubeadm.k8s.io/v1alpha3
+kind: ClusterConfiguration
 networking:
   serviceSubnet: ${service_cidr}
 apiServerExtraArgs:
