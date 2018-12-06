@@ -1,17 +1,38 @@
 output "global_ip_address_all" {
   description = "Global IP addresses of all node"
-  value       = "${concat(sakuracloud_server.masters.*.ipaddress, sakuracloud_server.workers.*.ipaddress)}"
+  value       = "${concat(sakuracloud_server.masters.*.ipaddress, sakuracloud_server.workers.*.ipaddress,sakuracloud_server.router_connected_masters.*.ipaddress, sakuracloud_server.router_connected_workers.*.ipaddress)}"
 }
+
+/*
+output "router_connected_global_ip_address_all" {
+  description = "Global IP addresses of all node"
+  value       = "${concat(sakuracloud_server.router_connected_masters.*.ipaddress, sakuracloud_server.router_connected_workers.*.ipaddress)}"
+}
+*/
 
 output "global_ip_address_masters" {
   description = "Global IP address of master node"
-  value       = "${sakuracloud_server.masters.*.ipaddress}"
+  value       = "${concat(sakuracloud_server.masters.*.ipaddress,sakuracloud_server.router_connected_masters.*.ipaddress)}"
 }
+
+/*
+output "router_connected_global_ip_address_masters" {
+  description = "Global IP address of master node"
+  value       = "${sakuracloud_server.router_connected_masters.*.ipaddress}"
+}
+*/
 
 output "global_ip_address_workers" {
   description = "Global IP addresses of worker nodes"
-  value       = "${sakuracloud_server.workers.*.ipaddress}"
+  value       = "${concat(sakuracloud_server.workers.*.ipaddress, sakuracloud_server.router_connected_workers.*.ipaddress)}"
 }
+
+/*
+output "router_connected_global_ip_address_workers" {
+  description = "Global IP addresses of worker nodes"
+  value       = "${sakuracloud_server.router_connected_workers.*.ipaddress}"
+}
+*/
 
 output "vpc_switch_id" {
   value = "${sakuracloud_switch.kubernetes_internal.id}"
@@ -38,7 +59,7 @@ output "service_cidr" {
 }
 
 output "download_kubeconfig_command" {
-  value = "usacloud --zone ${sakuracloud_server.masters.0.zone} server scp -y -i certs/id_rsa ${sakuracloud_server.masters.0.name}:/etc/kubernetes/admin.conf admin.conf\nexport KUBECONFIG=${path.cwd}admin.conf"
+  value = "usacloud --zone ${sakuracloud_vpc_router.vpc.zone} server scp -y -i certs/id_rsa ${local.master_node_name_prefix}01:/etc/kubernetes/admin.conf admin.conf\nexport KUBECONFIG=${path.cwd}admin.conf"
 }
 
 output "ssh_private_key" {
