@@ -78,9 +78,30 @@ variable service_node_port_range {
   description = "A port range to reserve for services with NodePort visibility"
 }
 
+variable use_external_router {
+  default     = false
+  description = "Flag of to use switch+router for external network"
+}
+
+variable external_router_nw_mask_len {
+  default     = 28
+  description = "Length of switch+router's network mask"
+}
+
+variable external_router_band_width {
+  default     = 100
+  description = "BandWidth of switch+router's network(Unit:Mbps)"
+}
+
 locals {
-  master_count            = 1
-  worker_count            = "${var.worker_count}"
+  master_count                  = "${var.use_external_router ? 0 : 1}"
+  router_connected_master_count = "${var.use_external_router ? 1 : 0}"
+  worker_count                  = "${var.use_external_router ? 0 : var.worker_count}"
+  router_connected_worker_count = "${var.use_external_router ? var.worker_count : 0}"
+
+  master_node_count = "${var.use_external_router ? local.router_connected_master_count : local.master_count}"
+  worker_node_count = "${var.use_external_router ? local.router_connected_worker_count: local.worker_count}"
+
   enable_master_isolation = "${var.worker_count > 0 ? "1" : "0"}"
 
   kube_internal_cidr     = "10.240.0.0/16"
@@ -89,6 +110,7 @@ locals {
   pod_cidr               = "10.200.0.0/16"
   service_cidr           = "10.96.0.0/12"
   vpc_router_internal_ip = "${cidrhost(local.kube_internal_cidr, 1)}"
+  external_count         = "${var.use_external_router ? 1 : 0}"
 
   master_node_name_prefix = "${var.node_name_prefix}-master-"
   worker_node_name_prefix = "${var.node_name_prefix}-worker-"

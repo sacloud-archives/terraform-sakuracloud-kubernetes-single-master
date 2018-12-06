@@ -22,7 +22,7 @@ resource sakuracloud_vpc_router_static_route "worker_pod_network_routes" {
   prefix                  = "${cidrsubnet(local.pod_cidr, 8, local.worker_ip_start_index + count.index)}"
   next_hop                = "${cidrhost(local.kube_internal_cidr, local.worker_ip_start_index + count.index)}"
 
-  count = "${local.worker_count}"
+  count = "${local.worker_node_count}"
 }
 
 resource sakuracloud_vpc_router_static_route "master_pod_network_routes" {
@@ -31,5 +31,5 @@ resource sakuracloud_vpc_router_static_route "master_pod_network_routes" {
   prefix                  = "${cidrsubnet(local.pod_cidr, 8, local.master_ip_start_index + count.index)}"
   next_hop                = "${cidrhost(local.kube_internal_cidr, local.master_ip_start_index + count.index)}"
 
-  count = "${local.master_count}"
+  count = "${local.master_node_count}"
 }

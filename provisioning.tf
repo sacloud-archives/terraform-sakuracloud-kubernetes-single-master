@@ -11,7 +11,7 @@ data template_file "master_provisioning" {
     kubeadm_action         = "${data.template_file.kubeadm_init.*.rendered[count.index]}"
   }
 
-  count = "${local.master_count}"
+  count = "${local.master_node_count}"
 }
 
 data template_file "worker_provisioning" {
@@ -24,7 +24,7 @@ data template_file "worker_provisioning" {
     kubeadm_action         = "${data.template_file.kubeadm_join.*.rendered[count.index]}"
   }
 
-  count = "${local.worker_count}"
+  count = "${local.worker_node_count}"
 }
 
 #################################
@@ -39,7 +39,7 @@ data template_file "master_script_header" {
     description = "Kubernetes master provisioning"
   }
 
-  count = "${local.master_count}"
+  count = "${local.master_node_count}"
 }
 
 data template_file "worker_script_header" {
@@ -51,7 +51,7 @@ data template_file "worker_script_header" {
     description = "Kubernetes worker provisioning"
   }
 
-  count = "${local.worker_count}"
+  count = "${local.worker_node_count}"
 }
 
 #################################
@@ -68,7 +68,7 @@ data template_file "master_pod_network_script" {
     service_cidr = "${local.service_cidr}"
   }
 
-  count = "${local.master_count}"
+  count = "${local.master_node_count}"
 }
 
 data template_file "worker_pod_network_script" {
@@ -82,7 +82,7 @@ data template_file "worker_pod_network_script" {
     service_cidr = "${local.service_cidr}"
   }
 
-  count = "${local.worker_count}"
+  count = "${local.worker_node_count}"
 }
 
 data template_file "kubeadm_prepare_worker" {
@@ -107,7 +107,7 @@ data template_file "kubeadm_init" {
     service_node_port_range = "${replace(var.service_node_port_range, ":","-")}"
   }
 
-  count = "${local.master_count}"
+  count = "${local.master_node_count}"
 }
 
 ##################################
@@ -122,5 +122,5 @@ data template_file "kubeadm_join" {
     pod_cidr   = "${cidrsubnet(local.pod_cidr, 8, local.worker_ip_start_index + count.index)}"
   }
 
-  count = "${local.worker_count}"
+  count = "${local.worker_node_count}"
 }

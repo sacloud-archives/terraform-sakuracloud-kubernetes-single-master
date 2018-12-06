@@ -13,6 +13,21 @@ module "kubernetes" {
   worker_count = 3
 
   /*********************************************
+   * for external network setting
+   *********************************************/
+  // (optional) use_external_router
+  //    Flag of to use switch+router for external networ
+  // use_external_router = false
+
+  // (optional) external_router_nw_mask_len
+  //    Length of switch+router's network mask
+  // external_router_nw_mask_len = 28
+
+  // (optional) external_router_band_width
+  //    BandWidth of switch+router's network(Unit:Mbps)
+  // external_router_band_width = 100
+
+  /*********************************************
    * for master node spec
    *********************************************/
   // (optional) master_disk_size
