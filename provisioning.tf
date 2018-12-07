@@ -128,9 +128,10 @@ data template_file "kubeadm_join" {
   template = "${file("${path.module}/templates/kubeadm_join.tpl")}"
 
   vars {
-    token      = "${local.token}"
-    master_url = "${cidrhost(local.kube_internal_cidr, local.master_ip_start_index)}:6443"
-    pod_cidr   = "${cidrsubnet(local.pod_cidr, 8, local.worker_ip_start_index + count.index)}"
+    token          = "${local.token}"
+    master_url     = "${cidrhost(local.kube_internal_cidr, local.master_ip_start_index)}:6443"
+    pod_cidr       = "${cidrsubnet(local.pod_cidr, 8, local.worker_ip_start_index + count.index)}"
+    cloud_provider = "${local.cloud_provider}"
   }
 
   count = "${local.worker_node_count}"

@@ -1,5 +1,18 @@
+cat > /tmp/kubeadm-extra-params.yaml <<EOF
+apiVersion: kubeadm.k8s.io/v1beta1
+kind: JoinConfiguration
+nodeRegistration:
+  kubeletExtraArgs:
+    cloud-provider: ${cloud_provider}
+discovery:
+  bootstrapToken:
+    token: ${token}
+    unsafeSkipCAVerification: true
+    apiServerEndpoint: "${master_url}"
+EOF
+
 # join
-kubeadm join --token=${token} --discovery-token-unsafe-skip-ca-verification ${master_url}
+kubeadm join --config /tmp/kubeadm-extra-params.yaml
 
 # Setup CNI plugin(bridge)
 mkdir -p /etc/cni/net.d
