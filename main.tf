@@ -14,6 +14,7 @@ resource sakuracloud_ssh_key "ssh_key" {
 resource "sakuracloud_note" "master_provisioning" {
   name    = "${local.master_node_name_prefix}${format("%02d", count.index+1)}"
   content = "${data.template_file.master_provisioning.*.rendered[count.index]}"
+  tags    = ["${var.other_resource_tags}"]
 
   count = "${local.master_node_count}"
 }
@@ -22,6 +23,7 @@ resource "sakuracloud_note" "master_provisioning" {
 resource "sakuracloud_note" "worker_provisioning" {
   name    = "${local.worker_node_name_prefix}${format("%02d", count.index+1)}"
   content = "${data.template_file.worker_provisioning.*.rendered[count.index]}"
+  tags    = ["${var.other_resource_tags}"]
 
   count = "${local.worker_node_count}"
 }

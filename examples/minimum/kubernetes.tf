@@ -4,10 +4,10 @@ module "kubernetes" {
   /*********************************************
    * required
    *********************************************/
+
   // (required) password
   //    Password for server root user
   password = "<put-your-password-here>"
-
   // (required) worker_count
   //    Number of worker node(allow zero)
   worker_count = 3
