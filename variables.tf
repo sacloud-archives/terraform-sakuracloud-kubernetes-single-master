@@ -93,6 +93,16 @@ variable external_router_band_width {
   description = "BandWidth of switch+router's network(Unit:Mbps)"
 }
 
+variable use_cloud_provider {
+  default     = false
+  description = "Flag of to use external cloud-controller-manager"
+}
+
+variable kubernetes_version {
+  default     = ""
+  description = "A specific Kubernetes version for the control plane(format: x.y.z)"
+}
+
 locals {
   master_count                  = "${var.use_external_router ? 0 : 1}"
   router_connected_master_count = "${var.use_external_router ? 1 : 0}"
@@ -103,6 +113,9 @@ locals {
   worker_node_count = "${var.use_external_router ? local.router_connected_worker_count: local.worker_count}"
 
   enable_master_isolation = "${var.worker_count > 0 ? "1" : "0"}"
+
+  cloud_provider                 = "${var.use_cloud_provider ? "external" : ""}"
+  kubernetes_version_with_prefix = "${var.kubernetes_version == "" ? "" : join("", list("-", var.kubernetes_version))}"
 
   kube_internal_cidr     = "10.240.0.0/16"
   master_ip_start_index  = 240

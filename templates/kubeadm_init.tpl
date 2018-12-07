@@ -1,19 +1,22 @@
 # Initialize cluster by kubeadm
 cat > /tmp/kubeadm-extra-params.yaml <<EOF
-apiVersion: kubeadm.k8s.io/v1alpha3
+apiVersion: kubeadm.k8s.io/v1beta1
 kind: InitConfiguration
 bootstrapTokens:
 - groups:
   token: ${token}
-
+nodeRegistration:
+  kubeletExtraArgs:
+    cloud-provider: ${cloud_provider}
 ---
-
-apiVersion: kubeadm.k8s.io/v1alpha3
+apiVersion: kubeadm.k8s.io/v1beta1
 kind: ClusterConfiguration
+kubernetesVersion: "${kubernetes_version}"
 networking:
   serviceSubnet: ${service_cidr}
-apiServerExtraArgs:
-  service-node-port-range: ${service_node_port_range}
+apiServer:
+  extraArgs:
+    service-node-port-range: ${service_node_port_range}
 EOF
 
 kubeadm init --config /tmp/kubeadm-extra-params.yaml
