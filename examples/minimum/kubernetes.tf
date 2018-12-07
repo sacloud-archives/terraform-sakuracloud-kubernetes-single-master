@@ -28,6 +28,17 @@ module "kubernetes" {
   // external_router_band_width = 100
 
   /*********************************************
+   * kubeadm parameters
+   *********************************************/
+  // (optional) use_cloud_provider
+  //    Flag of to use external cloud-controller-manager
+  // use_cloud_provider = false
+
+  // (optional) kubernetes_version
+  //    A specific Kubernetes version for the control plane(format: x.y.z)
+  // kubernetes_version = ""
+
+  /*********************************************
    * for master node spec
    *********************************************/
   // (optional) master_disk_size

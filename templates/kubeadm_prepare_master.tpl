@@ -59,7 +59,7 @@ repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF
 
-yum install -y kubelet kubeadm kubectl
+yum install -y kubelet${kubernetes_version} kubeadm kubectl
 systemctl enable kubelet && systemctl start kubelet
 
 # Install helm

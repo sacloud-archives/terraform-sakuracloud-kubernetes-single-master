@@ -7,7 +7,7 @@ data template_file "master_provisioning" {
   vars {
     startup_script_headers = "${data.template_file.master_script_header.*.rendered[count.index]}"
     node_prepare           = "${data.template_file.master_pod_network_script.*.rendered[count.index]}"
-    kubeadm_prepare        = "${file("${path.module}/templates/kubeadm_prepare_master.tpl")}"
+    kubeadm_prepare        = "${data.template_file.kubeadm_prepare_master.rendered}"
     kubeadm_action         = "${data.template_file.kubeadm_init.*.rendered[count.index]}"
   }
 
@@ -85,11 +85,20 @@ data template_file "worker_pod_network_script" {
   count = "${local.worker_node_count}"
 }
 
+data template_file "kubeadm_prepare_master" {
+  template = "${file("${path.module}/templates/kubeadm_prepare_master.tpl")}"
+
+  vars {
+    kubernetes_version = "${local.kubernetes_version_with_prefix}"
+  }
+}
+
 data template_file "kubeadm_prepare_worker" {
   template = "${file("${path.module}/templates/kubeadm_prepare_worker.tpl")}"
 
   vars {
     service_node_port_range = "${replace(var.service_node_port_range, "-",":")}"
+    kubernetes_version      = "${local.kubernetes_version_with_prefix}"
   }
 }
 
@@ -105,6 +114,8 @@ data template_file "kubeadm_init" {
     enable_master_isolation = "${local.enable_master_isolation}"
     service_cidr            = "${local.service_cidr}"
     service_node_port_range = "${replace(var.service_node_port_range, ":","-")}"
+    cloud_provider          = "${local.cloud_provider}"
+    kubernetes_version      = "${var.kubernetes_version}"
   }
 
   count = "${local.master_node_count}"
