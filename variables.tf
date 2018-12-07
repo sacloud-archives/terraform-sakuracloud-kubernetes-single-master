@@ -58,6 +58,11 @@ variable ssh_key_name {
   default = "kubernetes-ssh-key"
 }
 
+variable other_resource_tags {
+  type    = "list"
+  default = ["@k8s"]
+}
+
 variable kubeadm_token {
   default     = ""
   description = "Token used by kubeadm init/join(generated if empty)"

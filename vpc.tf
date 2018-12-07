@@ -1,10 +1,12 @@
 resource sakuracloud_switch "kubernetes_internal" {
   name = "kubernetes-internal"
+  tags = ["${var.other_resource_tags}"]
 }
 
 resource sakuracloud_vpc_router "vpc" {
   name = "kubernetes-vpc"
   plan = "standard"
+  tags = ["${var.other_resource_tags}"]
 }
 
 resource sakuracloud_vpc_router_interface "eth1" {
