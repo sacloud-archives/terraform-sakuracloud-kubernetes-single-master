@@ -70,7 +70,7 @@ $ kubectl cluster-info
 
 ## License
 
- `terraform-sakuracloud-kubernetes-single-master` Copyright (C) 2018 Kazumichi Yamamoto.
+ `terraform-sakuracloud-kubernetes-single-master` Copyright (C) 2018-2019 Kazumichi Yamamoto.
 
   This project is published under [Apache 2.0 License](https://github.com/sacloud/terraform-sakuracloud-kubernetes-single-master/blob/master/LICENSE.txt).
   
